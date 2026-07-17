@@ -1,4 +1,9 @@
-# placetel-mcp-server
+# placetel-web-api-mcp-server
+
+[![npm version](https://img.shields.io/npm/v/placetel-web-api-mcp-server.svg)](https://www.npmjs.com/package/placetel-web-api-mcp-server)
+[![CI](https://github.com/Wagner-Emden-IT-Services/placetel-web-api-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/Wagner-Emden-IT-Services/placetel-web-api-mcp-server/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node.js](https://img.shields.io/node/v/placetel-web-api-mcp-server.svg)](package.json)
 
 MCP (Model Context Protocol) server exposing the **complete Placetel Web API v2** — all **124 endpoints** as individual, well-annotated tools. Built with the MCP TypeScript SDK (`registerTool`), Zod validation, and a shared axios client with automatic rate-limit (HTTP 429 / `Retry-After`) handling.
 
@@ -52,17 +57,25 @@ npm run smoke      # starts the server, lists tools, prints TOOL_COUNT
 
 ### Register in an MCP client (e.g. Claude Desktop / Claude Code)
 
+Using the published npm package (no local checkout needed):
+
 ```json
 {
   "mcpServers": {
     "placetel": {
-      "command": "node",
-      "args": ["<absolute-path>/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "placetel-web-api-mcp-server"],
       "env": { "PLACETEL_API_KEY": "your_api_key_here" }
     }
   }
 }
 ```
+
+The `env` value may reference an existing OS environment variable, e.g.
+`"PLACETEL_API_KEY": "${MY_PLACETEL_KEY}"`.
+
+Alternatively point at a local build with `"command": "node"` and
+`"args": ["<absolute-path>/dist/index.js"]`.
 
 ## Development
 
@@ -80,3 +93,13 @@ npm run build      # tsc -> dist/
 
 - CTI, Webex, Microsoft Teams and SIM-card tools require the corresponding Placetel add-on products / real devices; they are implemented and type-checked but may not be exercisable on every account.
 - Error messages are actionable (401 → check key, 404 → check id, 422 → validation detail, 429 → rate limited).
+
+## Releasing
+
+Publishing to npm is automated via GitHub Actions (`.github/workflows/publish.yml`) and runs when a **GitHub Release is published**:
+
+1. Bump the version and update `CHANGELOG.md`: `npm version patch|minor|major`
+2. Push the tag: `git push --follow-tags`
+3. Publish a GitHub Release for that tag: `gh release create vX.Y.Z --generate-notes`
+
+The workflow then builds and runs `npm publish --provenance`. It requires the repository secret **`NPM_TOKEN`** — an npm **Automation** token (Access Tokens → Classic → Automation), which bypasses 2FA. A plain repo push does **not** republish npm; only a new release with a bumped version does.
