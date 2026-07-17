@@ -1,0 +1,51 @@
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { registerAiTools } from "./ai.js";
+import { registerCallCenterTools } from "./callCenter.js";
+import { registerCallDetailRecordsTools } from "./callDetailRecords.js";
+import { registerCallsTools } from "./calls.js";
+import { registerContactsTools } from "./contacts.js";
+import { registerCtiTools } from "./cti.js";
+import { registerDevicesTools } from "./devices.js";
+import { registerFaxesTools } from "./faxes.js";
+import { registerGroupsTools } from "./groups.js";
+import { registerMicrosoftTeamsTools } from "./microsoftTeams.js";
+import { registerNumbersTools } from "./numbers.js";
+import { registerPromptsTools } from "./prompts.js";
+import { registerProvisioningsTools } from "./provisionings.js";
+import { registerRecordingsTools } from "./recordings.js";
+import { registerRoutingPlansTools } from "./routingPlans.js";
+import { registerRoutingsTools } from "./routings.js";
+import { registerSimCardsTools } from "./simCards.js";
+import { registerSipUsersTools } from "./sipUsers.js";
+import { registerSitesTools } from "./sites.js";
+import { registerSmsTools } from "./sms.js";
+import { registerSubscriptionsTools } from "./subscriptions.js";
+import { registerUsersTools } from "./users.js";
+import { registerWebexTools } from "./webex.js";
+
+/** Registers every Placetel tool module (124 tools total). */
+export function registerAllTools(server: McpServer): void {
+  registerAiTools(server);
+  registerCallCenterTools(server);
+  registerCallDetailRecordsTools(server);
+  registerCallsTools(server);
+  registerContactsTools(server);
+  registerCtiTools(server);
+  registerDevicesTools(server);
+  registerFaxesTools(server);
+  registerGroupsTools(server);
+  registerMicrosoftTeamsTools(server);
+  registerNumbersTools(server);
+  registerPromptsTools(server);
+  registerProvisioningsTools(server);
+  registerRecordingsTools(server);
+  registerRoutingPlansTools(server);
+  registerRoutingsTools(server);
+  registerSimCardsTools(server);
+  registerSipUsersTools(server);
+  registerSitesTools(server);
+  registerSmsTools(server);
+  registerSubscriptionsTools(server);
+  registerUsersTools(server);
+  registerWebexTools(server);
+}

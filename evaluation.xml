@@ -1,0 +1,52 @@
+<evaluation>
+  <!--
+    Example evaluation set (mcp-builder Phase 4) for the placetel-mcp-server.
+
+    This is a TEMPLATE. The <answer> values below are placeholders/examples and do
+    NOT reflect any real account. Before running an evaluation, fill in the answers
+    with values from YOUR own Placetel account (verify them via the read-only tools).
+
+    Every question is independent, read-only (uses only GET tools), and has a single
+    verifiable answer for a given account.
+  -->
+  <qa_pair>
+    <question>Which subscription/platform tier is the account on, according to placetel_get_me?</question>
+    <answer>REPLACE_WITH_YOUR_TIER</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>What is the primary email address registered on the account (placetel_get_me)?</question>
+    <answer>user@example.com</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>What company name is registered on the account (placetel_get_me)?</question>
+    <answer>Example Company GmbH</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>In which year was the account created (created_at from placetel_get_me)?</question>
+    <answer>2020</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>What is the numeric account id (id from placetel_get_me)?</question>
+    <answer>100000</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>What SIP registration domain do the account's SIP users belong to (domain from placetel_list_sip_users)?</question>
+    <answer>example.sip-domain.tld</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>How many phone numbers does the account have (count via placetel_list_numbers)?</question>
+    <answer>0</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>What caller id is configured on the first SIP user (callerid from placetel_list_sip_users)?</question>
+    <answer>0000000000</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>List the account's numbers. What is the E.164 representation of the first number (e164 field)?</question>
+    <answer>+490000000000</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>How many SIP users are configured on the account (count via placetel_list_sip_users)?</question>
+    <answer>0</answer>
+  </qa_pair>
+</evaluation>
