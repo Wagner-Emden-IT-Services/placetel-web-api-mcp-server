@@ -12,4 +12,4 @@ export const REQUEST_TIMEOUT_MS = 30000;
 export const MAX_RETRIES_429 = 3;
 
 export const SERVER_NAME = "placetel-mcp-server";
-export const SERVER_VERSION = "1.0.0";
+export const SERVER_VERSION = "1.0.1";

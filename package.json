@@ -1,6 +1,6 @@
 {
   "name": "placetel-web-api-mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for the Placetel Web API v2 — full coverage of all 124 endpoints as tools",
   "author": "Wagner-Emden IT Services",
   "license": "MIT",
