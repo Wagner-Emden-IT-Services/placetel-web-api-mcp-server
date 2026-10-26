@@ -10,15 +10,22 @@ const mock = installAxiosMock();
 afterEach(() => mock.reset());
 after(() => mock.restore());
 
-/** Makes the retry sleep instant for this test and records the requested delays in ms. */
-function instantSleep(t) {
+/**
+ * Runs fn with an instant retry sleep and passes it the list of requested delays in ms.
+ * Patched by hand instead of t.mock (only from Node 18.13), restored in any case.
+ */
+async function withInstantSleep(fn) {
   const delays = [];
   const realSetTimeout = globalThis.setTimeout;
-  t.mock.method(globalThis, "setTimeout", (fn, ms, ...rest) => {
+  globalThis.setTimeout = (callback, ms, ...rest) => {
     delays.push(ms);
-    return realSetTimeout(fn, 0, ...rest);
-  });
-  return delays;
+    return realSetTimeout(callback, 0, ...rest);
+  };
+  try {
+    await fn(delays);
+  } finally {
+    globalThis.setTimeout = realSetTimeout;
+  }
 }
 
 test("sends the API key as Bearer token and asks for JSON", async () => {
@@ -50,40 +57,40 @@ test("fails without PLACETEL_API_KEY and sends nothing", async () => {
   assert.equal(mock.requests.length, 0);
 });
 
-test("retries HTTP 429 after the delay given in Retry-After", async (t) => {
-  const delays = instantSleep(t);
-  mock.reply(429, { message: "Too many requests" }, { "Retry-After": "2" });
-  mock.reply(200, { ok: true });
-  assert.deepEqual(await placetelRequest("GET", "/numbers"), { ok: true });
-  assert.equal(mock.requests.length, 2);
-  assert.deepEqual(delays, [2000]);
-});
+test("retries HTTP 429 after the delay given in Retry-After", () =>
+  withInstantSleep(async (delays) => {
+    mock.reply(429, { message: "Too many requests" }, { "Retry-After": "2" });
+    mock.reply(200, { ok: true });
+    assert.deepEqual(await placetelRequest("GET", "/numbers"), { ok: true });
+    assert.equal(mock.requests.length, 2);
+    assert.deepEqual(delays, [2000]);
+  }));
 
-test("backs off exponentially on HTTP 429 without Retry-After", async (t) => {
-  const delays = instantSleep(t);
-  mock.reply(429, {});
-  mock.reply(429, {});
-  mock.reply(200, []);
-  assert.deepEqual(await placetelRequest("GET", "/numbers"), []);
-  assert.equal(mock.requests.length, 3);
-  assert.deepEqual(delays, [1000, 2000]);
-});
+test("backs off exponentially on HTTP 429 without Retry-After", () =>
+  withInstantSleep(async (delays) => {
+    mock.reply(429, {});
+    mock.reply(429, {});
+    mock.reply(200, []);
+    assert.deepEqual(await placetelRequest("GET", "/numbers"), []);
+    assert.equal(mock.requests.length, 3);
+    assert.deepEqual(delays, [1000, 2000]);
+  }));
 
-test("gives up on HTTP 429 after MAX_RETRIES_429 retries", async (t) => {
-  const delays = instantSleep(t);
-  for (let i = 0; i <= MAX_RETRIES_429; i++) mock.reply(429, {}, { "Retry-After": "1" });
-  await assert.rejects(placetelRequest("GET", "/numbers"), (error) => error.response?.status === 429);
-  assert.equal(mock.requests.length, MAX_RETRIES_429 + 1);
-  assert.deepEqual(delays, Array(MAX_RETRIES_429).fill(1000));
-});
+test("gives up on HTTP 429 after MAX_RETRIES_429 retries", () =>
+  withInstantSleep(async (delays) => {
+    for (let i = 0; i <= MAX_RETRIES_429; i++) mock.reply(429, {}, { "Retry-After": "1" });
+    await assert.rejects(placetelRequest("GET", "/numbers"), (error) => error.response?.status === 429);
+    assert.equal(mock.requests.length, MAX_RETRIES_429 + 1);
+    assert.deepEqual(delays, Array(MAX_RETRIES_429).fill(1000));
+  }));
 
-test("does not retry other HTTP errors", async (t) => {
-  const delays = instantSleep(t);
-  mock.reply(500, { error: "boom" });
-  await assert.rejects(placetelRequest("GET", "/numbers"), (error) => error.response?.status === 500);
-  assert.equal(mock.requests.length, 1);
-  assert.deepEqual(delays, []);
-});
+test("does not retry other HTTP errors", () =>
+  withInstantSleep(async (delays) => {
+    mock.reply(500, { error: "boom" });
+    await assert.rejects(placetelRequest("GET", "/numbers"), (error) => error.response?.status === 500);
+    assert.equal(mock.requests.length, 1);
+    assert.deepEqual(delays, []);
+  }));
 
 test("rejects a missing path parameter without sending a request", async () => {
   await assert.rejects(placetelRequest("GET", "/contacts/{id}"), /Missing required path parameter\(s\): \{id\}/);

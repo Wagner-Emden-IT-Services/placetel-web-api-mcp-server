@@ -1,7 +1,7 @@
 /** Error texts returned to the agent: HTTP 401, 404, 422, 429, other statuses, network and input errors. */
 import "./helpers/env.mjs";
 import assert from "node:assert/strict";
-import { after, afterEach, before, test } from "node:test";
+import { test } from "node:test";
 import { AxiosError } from "axios";
 import { z } from "zod";
 import { handleApiError } from "../dist/services/errors.js";
@@ -75,13 +75,18 @@ test("invalid input and unexpected errors", () => {
   assert.equal(handleApiError("boom"), "Error: unexpected error: boom");
 });
 
-test("tools return API errors as isError results", async (t) => {
+test("tools return API errors as isError results", async () => {
   const mock = installAxiosMock();
   const { client, close } = await connectClient();
-  t.after(async () => {
+  try {
+    await expectToolErrors(client, mock);
+  } finally {
     await close();
     mock.restore();
-  });
+  }
+});
+
+async function expectToolErrors(client, mock) {
   const cases = [
     [401, {}, "placetel_list_contacts", {}, /^Error 401 \(Unauthorized\)/],
     [404, "", "placetel_get_contact", { id: 99 }, /^Error 404 \(Not Found\)/],
@@ -95,4 +100,4 @@ test("tools return API errors as isError results", async (t) => {
     assert.equal(result.isError, true, name);
     assert.match(resultText(result), expected);
   }
-});
+}
