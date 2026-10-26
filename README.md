@@ -82,7 +82,10 @@ Alternatively point at a local build with `"command": "node"` and
 ```bash
 npm run dev        # tsx watch on src/index.ts
 npm run build      # tsc -> dist/
+npm test           # build, then run the offline test suite (no API key, no network)
 ```
+
+`npm test` calls every tool through an in-memory MCP client and checks the intercepted request against `test/fixtures/placetel-contract.json`, built from the public Placetel spec. Refresh the contract with `node scripts/build-contract.mjs`.
 
 - `src/index.ts` — entry point, registers all tool modules, connects stdio.
 - `src/services/` — shared client, error mapping, pagination, formatting.
