@@ -98,8 +98,25 @@ function templateRegex(template) {
 const placeholders = (template) => [...template.matchAll(/\{([^}]+)\}/g)].map((m) => m[1]);
 const sameValue = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-/** All deviations of one intercepted request from the contract operation. */
-function checkRequest(request, op, args, { full }) {
+/** Spec parameter names a tool argument may stand for: same name, or `filter_x` / `search_x` for `filter[x]` / `search[x]`. */
+const specNamesFor = (arg) => [arg, arg.replace(/^(filter|search)_(.+)$/, "$1[$2]")];
+
+const TYPE_CHECKS = {
+  integer: Number.isInteger,
+  number: (v) => typeof v === "number",
+  string: (v) => typeof v === "string",
+  boolean: (v) => typeof v === "boolean",
+  array: Array.isArray,
+  object: (v) => v !== null && typeof v === "object" && !Array.isArray(v),
+};
+
+/**
+ * All deviations of one intercepted request from the contract operation.
+ * Differences that are only about strictness (a spec-required field the tool treats as
+ * optional, a looser value type) are reported through `strictness` instead; the caller
+ * accepts them only when they are listed in test/fixtures/known-strictness.json.
+ */
+function checkRequest(request, op, args, { full }, strictness) {
   const problems = [];
   const label = `${op.method} ${op.path}`;
   if (request.method !== op.method) problems.push(`method ${request.method}, spec says ${op.method}`);
@@ -107,19 +124,18 @@ function checkRequest(request, op, args, { full }) {
     problems.push(`URL ${request.url} does not start with ${API_BASE_URL}`);
     return problems;
   }
-  const used = new Set();
   const path = request.url.slice(API_BASE_URL.length);
   const match = templateRegex(op.path).exec(path);
+  const pathNames = placeholders(op.path);
   if (!match) {
     problems.push(`path ${path} does not match ${op.path}`);
   } else {
-    placeholders(op.path).forEach((placeholder, index) => {
+    pathNames.forEach((placeholder, index) => {
       const value = decodeURIComponent(match[index + 1]);
-      const source = Object.entries(args).find(
-        ([key, v]) => key !== "response_format" && (typeof v === "string" || typeof v === "number") && String(v) === value,
-      );
-      if (source) used.add(source[0]);
-      else problems.push(`path parameter {${placeholder}} was filled with "${value}", which is no tool argument`);
+      if (!(placeholder in args)) problems.push(`path parameter {${placeholder}} has no tool argument of the same name`);
+      else if (String(args[placeholder]) !== value) {
+        problems.push(`path parameter {${placeholder}} was filled with "${value}" instead of argument ${placeholder}=${JSON.stringify(args[placeholder])}`);
+      }
     });
   }
 
@@ -134,7 +150,9 @@ function checkRequest(request, op, args, { full }) {
   const body = request.body;
   if (body !== undefined && (body === null || typeof body !== "object" || Array.isArray(body))) {
     problems.push(`request body is not a JSON object: ${JSON.stringify(body)}`);
-  } else if (body !== undefined) {
+    return problems;
+  }
+  if (body !== undefined) {
     for (const key of Object.keys(body)) {
       if (!specBody.has(key)) {
         problems.push(`body field "${key}" is not a body parameter of ${label}${specQuery.has(key) ? " (the spec expects it in the query)" : ""}`);
@@ -142,17 +160,30 @@ function checkRequest(request, op, args, { full }) {
     }
   }
 
-  if (full) {
-    for (const p of op.parameters) {
-      if (!p.required) continue;
-      if (p.in === "query" && !(p.name in query)) problems.push(`required query parameter "${p.name}" cannot be sent through the tool`);
-      if (p.in === "body" && !(body && p.name in body)) problems.push(`required body field "${p.name}" cannot be sent through the tool`);
+  // Every argument must arrive, under its own spec field, in the spec's location.
+  for (const [arg, value] of Object.entries(args)) {
+    if (arg === "response_format" || pathNames.includes(arg)) continue;
+    const p = op.parameters.find((candidate) => candidate.in !== "path" && specNamesFor(arg).includes(candidate.name));
+    if (!p) {
+      problems.push(`argument "${arg}" has no matching query or body parameter in ${label}`);
+      continue;
     }
-    const sent = [...Object.values(query), ...Object.values(body ?? {})];
-    for (const [key, value] of Object.entries(args)) {
-      if (key === "response_format" || used.has(key)) continue;
-      if (!sent.some((s) => sameValue(s, value))) problems.push(`argument "${key}" does not reach the request`);
+    const target = p.in === "query" ? query : body ?? {};
+    if (!(p.name in target)) problems.push(`argument "${arg}" is not sent as ${p.in} field "${p.name}"`);
+    else if (!sameValue(target[p.name], value)) {
+      problems.push(`${p.in} field "${p.name}" carries ${JSON.stringify(target[p.name])} instead of argument ${arg}=${JSON.stringify(value)}`);
+    } else if (TYPE_CHECKS[p.type] && !TYPE_CHECKS[p.type](value)) {
+      strictness.push({ field: `${p.in}:${p.name}`, kind: "type", spec: p.type, sent: Array.isArray(value) ? "array" : typeof value });
     }
+  }
+
+  // Every required spec field must be reachable (all arguments) and should be required by the tool (required arguments only).
+  for (const p of op.parameters) {
+    if (!p.required || p.in === "path") continue;
+    const target = p.in === "query" ? query : body ?? {};
+    if (p.name in target) continue;
+    if (full) problems.push(`required ${p.in} field "${p.name}" cannot be sent through the tool`);
+    else strictness.push({ field: `${p.in}:${p.name}`, kind: "optional-instead-of-required" });
   }
   return problems;
 }
@@ -161,16 +192,22 @@ function sampleResponse(request) {
   return request.method === "GET" ? [{ id: 1, name: "Example entry" }] : { id: 1, status: "ok" };
 }
 
+const knownStrictness = readJson("./fixtures/known-strictness.json").differences;
+const strictnessKey = (entry) => `${entry.tool} ${entry.field} ${entry.kind}`;
+const knownStrictnessKeys = new Set(knownStrictness.map(strictnessKey));
+
 const { client, close } = await connectClient();
 const { tools } = await client.listTools();
 const passed = new Set();
-const covered = new Set();
+const observedStrictness = new Set();
 
 after(async () => {
   await close();
   const reportDir = process.env.PLACETEL_TEST_REPORT_DIR;
   if (reportDir) {
-    const report = { registered: tools.length, passed: passed.size, uncovered: contract.operations.length - covered.size };
+    // Operations without a tool: decided by the mapping, not by whether that tool passed.
+    const withTool = new Set(tools.map((t) => expectedEndpoints[t.name]).filter((endpoint) => operations.has(endpoint)));
+    const report = { registered: tools.length, passed: passed.size, uncovered: contract.operations.length - withTool.size };
     writeFileSync(join(reportDir, "coverage.json"), JSON.stringify(report));
   }
 });
@@ -230,7 +267,13 @@ describe("tool requests match the Placetel contract", () => {
 
         assert.ok(!result.isError, `${label}: tool returned an error: ${text}`);
         assert.equal(requests.length, 1, `${label}: expected exactly one HTTP request, got ${requests.length}`);
-        assert.deepEqual(checkRequest(requests[0], op, args, call), [], `${label}: request does not match ${endpoint}`);
+        const strictness = [];
+        assert.deepEqual(checkRequest(requests[0], op, args, call, strictness), [], `${label}: request does not match ${endpoint}`);
+        for (const entry of strictness) {
+          const key = strictnessKey({ tool: tool.name, ...entry });
+          observedStrictness.add(key);
+          assert.ok(knownStrictnessKeys.has(key), `${label}: strictness difference not listed in known-strictness.json: ${JSON.stringify(entry)}`);
+        }
         assert.ok(text.trim().length > 0, `${label}: empty response text`);
         if (call.format === "json") {
           assert.doesNotThrow(() => JSON.parse(text), `${label}: response is not valid JSON`);
@@ -241,7 +284,13 @@ describe("tool requests match the Placetel contract", () => {
       }
 
       passed.add(tool.name);
-      covered.add(endpoint);
     });
   }
+});
+
+describe("known strictness differences", () => {
+  it("lists only differences that still exist", () => {
+    const stale = [...knownStrictnessKeys].filter((key) => !observedStrictness.has(key));
+    assert.deepEqual(stale, [], "entries in known-strictness.json that no tool shows any more");
+  });
 });

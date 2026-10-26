@@ -4,9 +4,21 @@
  * The client calls the axios default instance, so replacing `axios.defaults.adapter`
  * intercepts every request before it reaches the network. Each request is recorded;
  * without a responder set by the test, the adapter throws, so an unexpected request
- * fails loudly instead of leaving the machine.
+ * fails loudly instead of leaving the machine. Other ways out (fetch, node:http, node:https)
+ * are blocked as well, so a client that bypasses axios cannot reach the network either.
  */
+import http from "node:http";
+import https from "node:https";
 import axios from "axios";
+
+const blocked = (name) => () => {
+  throw new Error(`Network access via ${name} is blocked in offline tests`);
+};
+globalThis.fetch = blocked("fetch");
+for (const [name, mod] of [["http", http], ["https", https]]) {
+  mod.request = blocked(`${name}.request`);
+  mod.get = blocked(`${name}.get`);
+}
 
 const requests = [];
 let responder = null;
