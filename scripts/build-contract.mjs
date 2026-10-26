@@ -21,9 +21,11 @@ const LOCATION_ORDER = ["path", "query", "header", "formData", "body"];
 const byString = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 
 function definitionOf(spec, schema) {
-  if (!schema) return {};
-  if (!schema.$ref) return schema;
-  return spec.definitions?.[schema.$ref.replace("#/definitions/", "")] ?? {};
+  let def = schema ?? {};
+  for (let depth = 0; def.$ref && depth < 10; depth++) {
+    def = spec.definitions?.[def.$ref.replace("#/definitions/", "")] ?? {};
+  }
+  return def;
 }
 
 function typeOf(schema) {
@@ -31,11 +33,13 @@ function typeOf(schema) {
 }
 
 /** Flattens Swagger parameters; a body parameter becomes one entry per top-level property of its schema. */
-function parametersOf(spec, rawParams) {
+function parametersOf(spec, rawParams, where) {
   const out = [];
   for (const p of rawParams) {
     if (p.in === "body") {
       const def = definitionOf(spec, p.schema);
+      // Fail loudly instead of silently dropping a body the contract format cannot describe (allOf, arrays, ...).
+      if (!def.properties) throw new Error(`${where}: body parameter "${p.name}" has no object schema with properties`);
       const required = new Set(def.required ?? []);
       for (const [name, prop] of Object.entries(def.properties ?? {})) {
         out.push({ name, in: "body", required: required.has(name), type: typeOf(prop) });
@@ -73,7 +77,7 @@ for (const [path, item] of Object.entries(spec.paths ?? {})) {
       method: method.toUpperCase(),
       path,
       response: responseOf(op),
-      parameters: parametersOf(spec, [...(item.parameters ?? []), ...(op.parameters ?? [])]),
+      parameters: parametersOf(spec, [...(item.parameters ?? []), ...(op.parameters ?? [])], `${method.toUpperCase()} ${path}`),
     });
   }
 }
