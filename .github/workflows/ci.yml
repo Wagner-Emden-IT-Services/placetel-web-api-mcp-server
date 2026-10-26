@@ -28,3 +28,6 @@ jobs:
 
       - name: TypeScript kompilieren
         run: npm run build
+
+      - name: Tests ausfuehren
+        run: npm test
