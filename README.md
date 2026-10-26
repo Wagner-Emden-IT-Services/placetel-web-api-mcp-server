@@ -82,7 +82,20 @@ Alternatively point at a local build with `"command": "node"` and
 ```bash
 npm run dev        # tsx watch on src/index.ts
 npm run build      # tsc -> dist/
+npm test           # build, then the offline test suite (no API key, no network)
 ```
+
+### Tests
+
+`npm test` calls every tool through a real MCP client (in-memory transport) and checks
+the HTTP request it would send against a contract generated from the public Placetel
+spec (`test/fixtures/placetel-contract.json`): method, path, query and body fields,
+required fields, annotations, and both response formats. Requests are intercepted on the
+axios level, so nothing leaves the machine. The run ends with `TOOL_COVERAGE=<passed>/<registered>`
+and `SPEC_UNCOVERED=<operations without a tool>`.
+
+To refresh the contract after an API change, run `node scripts/build-contract.mjs`
+(fetches `https://api.placetel.de/v2/swagger_doc.json`; not part of `npm test` or CI).
 
 - `src/index.ts` — entry point, registers all tool modules, connects stdio.
 - `src/services/` — shared client, error mapping, pagination, formatting.
