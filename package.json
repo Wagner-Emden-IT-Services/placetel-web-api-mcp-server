@@ -23,6 +23,7 @@
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
     "smoke": "node scripts/smoke.mjs",
+    "test": "npm run build && node test/run.mjs",
     "clean": "rimraf dist",
     "prepublishOnly": "npm run build"
   },
