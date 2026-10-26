@@ -7,7 +7,8 @@
  *  - one call with every argument set and one with only the required arguments: method, path with the
  *    path parameters filled in, name and location of every query and body field sent;
  *  - every required parameter of the spec is reachable through the tool (sent in the full call);
- *  - every tool argument reaches the request (changing it changes the request);
+ *  - every tool argument lands in its own field: changing it changes exactly the path placeholder, query
+ *    or body field of the same name (`filter_x` for `filter[x]`), and the new value arrives there;
  *  - the result comes back without error for response_format json and markdown;
  *  - the annotations match the HTTP method (matrix in docs/BUILD-PLAN.md, section 4).
  */
@@ -97,10 +98,11 @@ function sampleValue(schema, name, seed, variant) {
   switch (schema.type) {
     case "integer":
     case "number": {
-      let value = seed + variant;
-      if (schema.maximum !== undefined && value > schema.maximum) value = schema.maximum - variant;
-      if (schema.minimum !== undefined && value < schema.minimum) value = schema.minimum + variant;
-      return value;
+      // Variant 1 is the smallest allowed value (0 if unbounded), so a dropped 0 shows up too.
+      const lowest = schema.minimum ?? 0;
+      const highest = schema.maximum ?? Infinity;
+      const value = variant === 0 ? Math.min(seed, highest) : lowest;
+      return variant === 1 && value === Math.min(seed, highest) ? lowest + 1 : value;
     }
     case "boolean":
       return variant === 0;
@@ -158,14 +160,60 @@ async function checkRequests(tool, op) {
 
   for (const spec of specs) {
     const args = { ...fullArgs, [spec.name]: sampleValue(spec.schema, spec.name, spec.seed, 1) };
-    if (JSON.stringify(args[spec.name]) === JSON.stringify(fullArgs[spec.name])) {
-      if (spec.required) continue; // single-value enum: nothing to vary
+    const leftOut = JSON.stringify(args[spec.name]) === JSON.stringify(fullArgs[spec.name]);
+    if (leftOut) {
+      if (spec.required) continue; // required single-value enum: nothing to vary
       delete args[spec.name];
     }
-    const changed = singleRequest(await call(tool, op, args), `argument ${spec.name} changed`, problems);
-    if (changed && sameRequest(full, changed)) problems.push(`argument ${spec.name} does not reach the request`);
+    const label = `argument ${spec.name} ${leftOut ? "left out" : "changed"}`;
+    const changed = singleRequest(await call(tool, op, args), label, problems);
+    if (!changed) continue;
+    problems.push(...requestProblems(op, changed, args).map((p) => `${label}: ${p}`));
+    problems.push(...fieldProblems(op, spec.name, full, changed, leftOut ? undefined : args[spec.name]));
   }
   return problems;
+}
+
+/** Fields of a request: path placeholders, query parameters (spec names) and top-level body keys, as wire strings. */
+function requestFields(op, req) {
+  const fields = new Map();
+  const segments = (req.url.origin + req.url.pathname).slice(contract.base_url.length).split("/");
+  op.path.split("/").forEach((segment, i) => {
+    if (segment.startsWith("{")) fields.set(`path ${segment.slice(1, -1)}`, decodeURIComponent(segments[i] ?? ""));
+  });
+  for (const wireName of new Set(req.url.searchParams.keys())) {
+    fields.set(`query ${queryParamName(op, wireName)}`, req.url.searchParams.getAll(wireName).join(","));
+  }
+  if (req.body && typeof req.body === "object") {
+    for (const [key, value] of Object.entries(req.body)) fields.set(`body ${key}`, JSON.stringify(value));
+  }
+  return fields;
+}
+
+/** Fields a tool argument may fill: its own name, or `prefix[rest]` for an argument `prefix_rest` (filter_x -> filter[x]). */
+function ownFields(name) {
+  const prefixed = /^([a-z]+)_(.+)$/.exec(name);
+  const names = prefixed ? [name, `${prefixed[1]}[${prefixed[2]}]`] : [name];
+  return names.flatMap((n) => [`path ${n}`, `query ${n}`, `body ${n}`]);
+}
+
+/** Changing one argument may change only its own field, and the new value must arrive there unchanged. */
+function fieldProblems(op, name, fullReq, changedReq, newValue) {
+  const before = requestFields(op, fullReq);
+  const after = requestFields(op, changedReq);
+  const changed = [...new Set([...before.keys(), ...after.keys()])].filter((key) => before.get(key) !== after.get(key));
+  if (!changed.length) return [`argument ${name} does not reach the request`];
+  const foreign = changed.filter((key) => !ownFields(name).includes(key));
+  if (foreign.length) return [`argument ${name} lands in ${foreign.join(", ")}`];
+  if (newValue === undefined) return [];
+  return changed
+    .filter((key) => after.get(key) !== wireValue(key, newValue))
+    .map((key) => `argument ${name} sends ${after.get(key) ?? "nothing"} in ${key}, expected ${wireValue(key, newValue)}`);
+}
+
+function wireValue(field, value) {
+  if (field.startsWith("body ")) return JSON.stringify(value);
+  return Array.isArray(value) ? value.map(String).join(",") : String(value);
 }
 
 function findParam(op, location, name) {
@@ -198,8 +246,8 @@ function requestProblems(op, req, args) {
     template.forEach((segment, i) => {
       if (!segment.startsWith("{")) return;
       const name = segment.slice(1, -1);
-      const filled = name in args ? String(args[name]) === actual[i] : Object.values(args).some((v) => String(v) === actual[i]);
-      if (!filled) problems.push(`path parameter {${name}} is "${actual[i]}", not the value of a tool argument`);
+      if (!(name in args)) problems.push(`path parameter {${name}} has no tool argument of the same name`);
+      else if (String(args[name]) !== actual[i]) problems.push(`path parameter {${name}} is "${actual[i]}", not argument ${name}`);
     });
   }
 
@@ -227,10 +275,6 @@ function unreachableRequired(op, req) {
     .filter((p) => p.required)
     .filter((p) => (p.in === "query" && !sentQuery.has(p.name)) || (p.in === "body" && !Object.hasOwn(sentBody, p.name)))
     .map((p) => `required ${p.in} parameter "${p.name}" cannot be sent through the tool`);
-}
-
-function sameRequest(a, b) {
-  return a.method === b.method && a.url.href === b.url.href && JSON.stringify(a.body) === JSON.stringify(b.body);
 }
 
 /** The tool result must come back without error in every response_format and carry the API data. */
