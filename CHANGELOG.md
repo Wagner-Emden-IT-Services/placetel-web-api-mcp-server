@@ -4,6 +4,24 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Offline test suite (`npm test`, Node's built-in test runner, no new dependencies):
+  every one of the 124 tools is called through a real MCP client over the in-memory
+  transport and its HTTP request is checked against the Placetel API contract —
+  method, path with path parameters, query and body field names and location,
+  reachability of required fields, `response_format` `json` and `markdown`, and
+  annotations per HTTP method. Requests are intercepted on the axios level; no
+  network access and no API key are needed.
+- Tests for the shared client (Bearer header, HTTP 429 retry with `Retry-After`,
+  path parameters, empty query values), error texts, pagination and truncation
+  at `CHARACTER_LIMIT`.
+- API contract `test/fixtures/placetel-contract.json` and its generator
+  `scripts/build-contract.mjs`, built from the public spec
+  `https://api.placetel.de/v2/swagger_doc.json`.
+- CI runs `npm test` after the build on Node 18, 20 and 22.
+
 ## [1.0.1] - 2026-07-23
 
 ### Changed

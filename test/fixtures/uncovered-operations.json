@@ -1,0 +1,17 @@
+{
+  "note": "Contract operations that intentionally have no tool yet. Any other operation without a tool fails the tests; an entry here that gains a tool fails them too.",
+  "operations": [
+    {
+      "operation": "GET /customers",
+      "reason": "Customers endpoints were added to the Placetel API after the tool set was built; tools are a follow-up."
+    },
+    {
+      "operation": "POST /customers",
+      "reason": "Customers endpoints were added to the Placetel API after the tool set was built; tools are a follow-up."
+    },
+    {
+      "operation": "GET /customers/{id}",
+      "reason": "Customers endpoints were added to the Placetel API after the tool set was built; tools are a follow-up."
+    }
+  ]
+}

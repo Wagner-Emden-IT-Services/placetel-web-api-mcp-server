@@ -1,0 +1,3726 @@
+{
+  "source": {
+    "url": "https://api.placetel.de/v2/swagger_doc.json",
+    "sha256": "268954a34a778bfa0d0faa6d01e25add38f1ad9dd86e044cf3cf9674409f89df",
+    "retrieved": "2026-10-26"
+  },
+  "basePath": "/v2",
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/ai/status",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/call_center_agents",
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/call_center_agents",
+      "parameters": [
+        {
+          "name": "agent_type",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "extension_pstn",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "extension_sip",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "extension_type",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "priority",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/call_center_agents/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "extension_pstn",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "extension_sip",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "extension_type",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "priority",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "status",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/call_center_calls",
+      "parameters": [
+        {
+          "name": "date",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "queue_ids",
+          "in": "query",
+          "required": false,
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/call_center_calls/{id}/{pick}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "pick",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "sipuid",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/call_center_queues",
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/call_center_queues",
+      "parameters": [
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "mail_notification",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "max_iterations",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "num_loops",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "play_mailbox",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "play_prompt",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "play_prompt_end",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "play_prompt_waiting",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "priority",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "prompt_end_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "prompt_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "prompt_mailbox_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "prompt_waiting_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "ringing_time",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/call_center_queues/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "mail_notification",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "max_iterations",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "num_loops",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "play_mailbox",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "play_prompt",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "play_prompt_end",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "play_prompt_waiting",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "priority",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "prompt_end_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "prompt_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "prompt_mailbox_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "prompt_waiting_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "ringing_time",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/call_detail_records",
+      "parameters": [
+        {
+          "name": "date",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/calls",
+      "parameters": [
+        {
+          "name": "filter[date]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[from_number]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[to_number]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[type]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "order",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/calls",
+      "parameters": [
+        {
+          "name": "from_name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "sipuid",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "target",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/calls/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/calls/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/contacts",
+      "parameters": [
+        {
+          "name": "filter[blocked]",
+          "in": "query",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "filter[company]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[email]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[email_work]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[first_name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[last_name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[mobile]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[mobile_work]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[phone]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[phone_work]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[speeddial]",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "filter[updated_at_gte]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[updated_at_lte]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "search[number]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/contacts",
+      "parameters": [
+        {
+          "name": "address",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "address_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "blocked",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "color",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "company",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "email",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "email_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "facebook_url",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "fax",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "fax_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "first_name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "last_name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "linkedin_url",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "mobile",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "mobile_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "phone",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "phone_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "speeddial",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "tags",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "twitter_account",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "user_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "xing_url",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/contacts/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/contacts/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "address",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "address_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "blocked",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "color",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "company",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "email",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "email_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "facebook_url",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "fax",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "fax_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "first_name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "last_name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "linkedin_url",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "mobile",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "mobile_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "phone",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "phone_work",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "speeddial",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "tags",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "twitter_account",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "user_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "xing_url",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/contacts/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/cti/{mac}",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "params",
+          "in": "query",
+          "required": true,
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/cti/{mac}",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "params",
+          "in": "body",
+          "required": true,
+          "type": "object"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/answer",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/blind_transfer",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "number",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/complete_conference",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/complete_transfer",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/decline",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/dial",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "number",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/dial_digit",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "digit",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/hangup",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/hold",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/resume",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/send_dtmf_digits",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "digits",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/start_conference",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/cti/{mac}/start_transfer",
+      "parameters": [
+        {
+          "name": "mac",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "line",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/customers",
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/customers",
+      "parameters": [
+        {
+          "name": "address_attributes",
+          "in": "body",
+          "required": true,
+          "type": "object"
+        },
+        {
+          "name": "client_attributes",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "first_name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "last_name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "locale",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "login",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "product",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/customers/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/devices",
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/faxes",
+      "parameters": [
+        {
+          "name": "filter[from_number]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[to_number]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[type]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "order",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/faxes",
+      "parameters": [
+        {
+          "name": "email",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "file",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "from_number",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "header",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "to_number",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/faxes/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/faxes/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/groups",
+      "parameters": [
+        {
+          "name": "filter[description]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[type]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/groups",
+      "parameters": [
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "member_ids",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/groups/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/groups/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "member_ids",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/groups/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/microsoft_teams/integration",
+      "parameters": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/microsoft_teams/sync/{sip_user_id}",
+      "parameters": [
+        {
+          "name": "sip_user_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/microsoft_teams/users",
+      "parameters": [
+        {
+          "name": "filter[sync_status]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/microsoft_teams/users",
+      "parameters": [
+        {
+          "name": "ms_uuid",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "sip_user_id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/microsoft_teams/users/{sip_user_id}",
+      "parameters": [
+        {
+          "name": "sip_user_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/numbers",
+      "parameters": [
+        {
+          "name": "filter[activated]",
+          "in": "query",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "filter[description]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[number]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[prefix]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[site_id]",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/numbers/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/numbers/{id}/activation",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/numbers/{id}/activation",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/numbers/{number_id}/profiles",
+      "parameters": [
+        {
+          "name": "number_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/numbers/{number_id}/profiles",
+      "parameters": [
+        {
+          "name": "number_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/numbers/{number_id}/profiles",
+      "parameters": [
+        {
+          "name": "number_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "id",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/numbers/{number_id}/profiles/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "number_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/prompts",
+      "parameters": [
+        {
+          "name": "filter[description]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/prompts",
+      "parameters": [
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "file",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "text",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "voice",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/prompts/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/prompts/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "file",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "text",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "voice",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/prompts/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/provisionings",
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "webuser_id",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/provisionings",
+      "parameters": [
+        {
+          "name": "call_waiting",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "codec",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "encryption",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "keys",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "lines",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "locale",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "mac",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "phone_model",
+          "in": "body",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "webuser_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/provisionings/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/provisionings/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "call_waiting",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "codec",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "encryption",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "keys",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "lines",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "locale",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "webuser_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/provisionings/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/provisionings/{id}/custom_configurations",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/provisionings/{id}/custom_configurations",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "configurations",
+          "in": "body",
+          "required": true,
+          "type": "object"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/provisionings/{id}/custom_configurations/{custom_configuration_id}",
+      "parameters": [
+        {
+          "name": "custom_configuration_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/provisionings/{id}/reconfigure",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/recordings",
+      "parameters": [
+        {
+          "name": "filter[date]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[direction]",
+          "in": "query",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "filter[from]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[to]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "order",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/recordings/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/recordings/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/routing_plans",
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/routing_plans",
+      "parameters": [
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "did",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "routing_objects",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/routing_plans/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/routing_plans/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "did",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "routing_objects",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/routing_plans/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/routing_plans/{id}/routings",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/routing_plans/{id}/simulate",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "time",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/routings",
+      "parameters": [
+        {
+          "name": "filter[updated_at_gte]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[updated_at_lte]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/routings",
+      "parameters": [
+        {
+          "name": "api",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "custom_callerid",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "forward",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "group",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "ivr",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "mailbox",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "music_on_hold",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "notification",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "notify_external_api",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "queue",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "time_settings",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/routings/{number_or_id}",
+      "parameters": [
+        {
+          "name": "number_or_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/routings/{number_or_id}",
+      "parameters": [
+        {
+          "name": "number_or_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "api",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "custom_callerid",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "forward",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "group",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "ivr",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "mailbox",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "music_on_hold",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "notification",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "notify_external_api",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "plan",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "queue",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "time_settings",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/routings/{number_or_id}",
+      "parameters": [
+        {
+          "name": "number_or_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/sim_cards",
+      "parameters": [
+        {
+          "name": "filter[status]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/sim_cards/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/sip_users",
+      "parameters": [
+        {
+          "name": "filter[description]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[did]",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "filter[name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[username]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/sip_users",
+      "parameters": [
+        {
+          "name": "automatic_prefix",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "blocked_prefixes",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "busy_on_busy",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "callerid",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "contact_speeddialing",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "did",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "hotdesk_login",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "hotdesk_pin",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "hotdesk_provisioning_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "hotdesk_type",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "routing_plan_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "type",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "webuser_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/sip_users/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/sip_users/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "automatic_prefix",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "blocked_prefixes",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "busy_on_busy",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "callerid",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "contact_speeddialing",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "did",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "hotdesk_login",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "hotdesk_pin",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "hotdesk_provisioning_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "hotdesk_type",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "p_asserted_identity",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "routing_plan_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "webuser_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/sip_users/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/sip_users/{id}/short_codes",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/sip_users/{id}/short_codes",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "action",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "code",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "group_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "number",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/sip_users/{id}/short_codes/{code_id}",
+      "parameters": [
+        {
+          "name": "code_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/sites",
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/sites/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/sms",
+      "parameters": [
+        {
+          "name": "message",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "recipient",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/subscriptions",
+      "parameters": []
+    },
+    {
+      "method": "PUT",
+      "path": "/subscriptions",
+      "parameters": [
+        {
+          "name": "accepted",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "hungup",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "incoming",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "numbers",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        },
+        {
+          "name": "outgoing",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "phone",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "service",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "url",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/subscriptions/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/users",
+      "parameters": [
+        {
+          "name": "filter[email]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[first_name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[last_name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[login]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[type]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/users",
+      "parameters": [
+        {
+          "name": "assign_did",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "callerid",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "did",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "email",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "first_name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "last_name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "phone_mac",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "phone_model",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "sip_user_type",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/users/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/users/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "admin_user",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "avatar",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "callerid",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "did",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "email",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "first_name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "last_name",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "locale",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "obfuscate_billing_records",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "obfuscate_others",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "permissions",
+          "in": "body",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "name": "primary_sip_user_id",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "rights_numbers",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/users/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/users/{id}/password_reset",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/users/{id}/two_factor_authentication",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/webex/numbers/{number_or_id}/fax_settings",
+      "parameters": [
+        {
+          "name": "number_or_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/webex/numbers/{number_or_id}/fax_settings",
+      "parameters": [
+        {
+          "name": "number_or_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "email",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "fax_attachment",
+          "in": "body",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "faxheader",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "faxpin",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "faxsettings",
+          "in": "body",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "faxwhitelist",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "webex_room_ids",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/webex/numbers/{number_or_id}/fax_settings",
+      "parameters": [
+        {
+          "name": "number_or_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/webex/users",
+      "parameters": [
+        {
+          "name": "filter[first_name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[last_name]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "filter[login]",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/webex/users",
+      "parameters": [
+        {
+          "name": "email",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "extension",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "first_name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "last_name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "location_id",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "package",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "phone_number",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/webex/users/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/webex/users/{id}/license",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/webex/users/{id}/license",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "extension",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "location_id",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "package",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "phone_number",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/webex/users/{id}/license",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "package",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/webex/users/{id}/numbers",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "per_page",
+          "in": "query",
+          "required": false,
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/webex/users/{id}/numbers",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "numbers",
+          "in": "body",
+          "required": false,
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/webex/workspaces",
+      "parameters": [
+        {
+          "name": "display_name",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/webex/workspaces",
+      "parameters": [
+        {
+          "name": "calling",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "display_name",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "extension",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "location_id",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "phone_number",
+          "in": "body",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "supported_devices",
+          "in": "body",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/webex/workspaces/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    }
+  ]
+}

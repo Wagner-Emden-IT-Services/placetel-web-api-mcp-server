@@ -1,0 +1,35 @@
+{
+  "note": "Known differences in strictness between tool input schemas and the spec. Requests stay valid; these are listed, not fixed. A new difference fails the tests, and so does an entry that no longer applies.",
+  "differences": [
+    {
+      "tool": "placetel_get_cti_config",
+      "field": "query:params",
+      "kind": "optional-instead-of-required"
+    },
+    {
+      "tool": "placetel_get_cti_config",
+      "field": "query:params",
+      "kind": "type"
+    },
+    {
+      "tool": "placetel_list_call_center_calls",
+      "field": "query:date",
+      "kind": "optional-instead-of-required"
+    },
+    {
+      "tool": "placetel_list_call_center_calls",
+      "field": "query:queue_ids",
+      "kind": "type"
+    },
+    {
+      "tool": "placetel_list_call_detail_records",
+      "field": "query:date",
+      "kind": "optional-instead-of-required"
+    },
+    {
+      "tool": "placetel_list_recordings",
+      "field": "query:filter[direction]",
+      "kind": "type"
+    }
+  ]
+}
